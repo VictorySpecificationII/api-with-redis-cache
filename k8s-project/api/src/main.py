@@ -1,7 +1,10 @@
 # app/main.py
 from fastapi import FastAPI
-from app.endpoints import router
+from app.endpoints import router as basic_router
+from app.db_endpoints import router as db_router
 
 app = FastAPI()
 
-app.include_router(router)
+# Include routers
+app.include_router(basic_router)
+app.include_router(db_router)
