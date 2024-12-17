@@ -2,8 +2,8 @@
 
  - DONE -> Traefik: Acts as the edge reverse proxy and load balancer for microservices in a Kubernetes cluster.
  - DONE -> Redis: Caching layer for backend API responses to improve performance.
- - YOU ARE HERE -> Memcached: Used for session storage and lightweight ephemeral caching.
- - Jenkins: Manages continuous integration and builds.
+ - DONE -> Memcached: Used for session storage and lightweight ephemeral caching.
+ - YOU ARE HERE -> Jenkins: Manages continuous integration and builds.
  - Rundeck: Automates task orchestration like DB backups or deployment cleanup tasks.
  - GitLab Runners: Run CI/CD jobs triggered by GitLab for quick feedback on code quality.
  - Spinnaker: Handles multi-stage deployments to production.
