@@ -38,11 +38,28 @@ Build API by
 Run Traefik by
  - ./traefik/deployment.sh
 
+Run PostgreSQL by
+ - ./postgresql/deployment.sh
+
 Run Redis by
  - ./redis/deployment.sh
+
+Run memcached by
+ - ./memcached/deployment.sh
+
+Run Gitea by (currently unused in favor of GitHub)
+ - ./gitea.deployment.sh
+
+Run Jenkins by
+ - ./jenkins/deployment.sh
 
 Run HTTPBin by
  - microk8s kubectl apply -f httpbin/httpbin.yaml
 
 Run api by
  - microk8s kubectl apply -f api/api.yaml
+
+# Specifics
+
+Jumping from cafeteria to cafeteria with different network layouts? Inside the microk8s/ directory, there are instructions on how to add the
+venue's subnet to metallb through a configmap. That should help you out.

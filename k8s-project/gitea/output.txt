@@ -1,0 +1,11 @@
+antreas@sanctuary:~/Desktop/api-with-redis-cache/k8s-project/gitea$ microk8s helm3 upgrade -f values-gitea.yaml gitea gitea/gitea --version 10.6.0
+Release "gitea" has been upgraded. Happy Helming!
+NAME: gitea
+LAST DEPLOYED: Tue Dec 17 18:30:37 2024
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+NOTES:
+1. Get the application URL by running these commands:
+  echo "Visit http://127.0.0.1:3000 to use your application"
+  kubectl --namespace default port-forward svc/gitea-http 3000:3000

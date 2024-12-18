@@ -1,0 +1,74 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker:dind
+    command:
+    - sleep
+    args:
+    - infinity
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - mountPath: /var/run/docker.sock
+        name: docker-socket
+  - name: jnlp
+    image: jenkins/inbound-agent:latest
+    env:
+    - name: "JENKINS_TUNNEL"
+      value: "jenkins-agent.default.svc.cluster.local:50000"
+    - name: "REMOTING_OPTS"
+      value: "-noReconnectAfter 1d"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/home/jenkins/agent"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  nodeSelector:
+    kubernetes.io/os: "linux"
+  restartPolicy: "Never"
+  volumes:
+    - name: docker-socket
+      hostPath:
+        path: /var/run/docker.sock
+        type: Socket
+    - name: workspace-volume
+      emptyDir: {}
+'''
+            defaultContainer 'docker'
+        }
+    }
+    stages {
+        stage('Check Docker Version') {
+            steps {
+                sh 'docker --version'
+            }
+        }
+        stage('Clone Git Repository') {
+            steps {
+                sh 'git clone https://github.com/VictorySpecificationII/api-with-redis-cache'
+            }
+        }
+        stage('Build API Microservice') {
+            steps {
+                // Navigate to the correct directory and run the ci.sh script
+                sh '''
+                cd api-with-redis-cache/k8s-project/api/src
+                chmod +x ci.sh
+                ./ci.sh
+                '''
+            }
+        }
+        stage('Check Docker Version Again') {
+            steps {
+                sh 'docker --version'
+            }
+        }
+    }
+}
