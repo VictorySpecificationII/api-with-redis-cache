@@ -25,6 +25,7 @@ Allow insecure registry by running
 Add
  - api.local
  - httpbin.local
+ - jenkins.local
 
 To your /etc/hosts file
 
